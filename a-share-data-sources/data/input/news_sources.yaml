@@ -1,0 +1,352 @@
+# Public news source pool imported and sanitized from 金融数据源_v2/sources.yaml.
+# No API keys or mail credentials belong in this file.
+
+rss_sources:
+  - id: bloomberg
+    name: "Bloomberg Markets"
+    url: "https://feeds.bloomberg.com/markets/news.rss"
+    category: "international_finance"
+  - id: wsj
+    name: "WSJ Markets"
+    url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml"
+    category: "international_finance"
+  - id: ft
+    name: "FT"
+    url: "https://www.ft.com/markets?format=rss"
+    category: "international_finance"
+  - id: cnbc
+    name: "CNBC"
+    url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147"
+    category: "international_finance"
+  - id: yahoo
+    name: "Yahoo Finance"
+    url: "https://finance.yahoo.com/news/rssindex"
+    category: "international_finance"
+  - id: marketwatch
+    name: "MarketWatch"
+    url: "https://feeds.marketwatch.com/marketwatch/topstories/"
+    category: "international_finance"
+  - id: investing
+    name: "Investing.com"
+    url: "https://www.investing.com/rss/news.rss"
+    category: "international_finance"
+  - id: seekingalpha
+    name: "Seeking Alpha"
+    url: "https://seekingalpha.com/market_currents.xml"
+    category: "international_finance"
+  - id: fortune
+    name: "Fortune"
+    url: "https://fortune.com/feed/"
+    category: "international_finance"
+  - id: nasdaq
+    name: "Nasdaq"
+    url: "https://www.nasdaq.com/feed/nasdaq-original/rss.xml"
+    category: "international_finance"
+  - id: ibtimes
+    name: "IBTimes"
+    url: "https://www.ibtimes.com/rss"
+    category: "international_finance"
+  - id: zerohedge
+    name: "ZeroHedge"
+    url: "https://feeds.feedburner.com/zerohedge/feed"
+    category: "international_finance"
+  - id: aljazeera
+    name: "Al Jazeera"
+    url: "https://www.aljazeera.com/xml/rss/all.xml"
+    category: "international_general"
+  - id: bbc_biz
+    name: "BBC Business"
+    url: "https://feeds.bbci.co.uk/news/business/rss.xml"
+    category: "international_general"
+  - id: bbc_world
+    name: "BBC World"
+    url: "https://feeds.bbci.co.uk/news/world/rss.xml"
+    category: "international_general"
+  - id: bbc_top
+    name: "BBC Top Stories"
+    url: "https://feeds.bbci.co.uk/news/rss.xml"
+    category: "international_general"
+  - id: bbc_tech
+    name: "BBC Technology"
+    url: "https://feeds.bbci.co.uk/news/technology/rss.xml"
+    category: "international_general"
+  - id: guardian
+    name: "Guardian Business"
+    url: "https://www.theguardian.com/business/rss"
+    category: "international_general"
+  - id: npr_biz
+    name: "NPR Business"
+    url: "https://feeds.npr.org/1006/rss.xml"
+    category: "international_general"
+  - id: washpost_biz
+    name: "Washington Post Business"
+    url: "https://feeds.washingtonpost.com/rss/business"
+    category: "international_general"
+  - id: nyt
+    name: "NYT Business"
+    url: "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml"
+    category: "international_general"
+  - id: scmp
+    name: "SCMP"
+    url: "https://www.scmp.com/rss/91/feed"
+    category: "asia_pacific"
+  - id: nikkei
+    name: "Nikkei Asia"
+    url: "https://asia.nikkei.com/rss/feed/nar"
+    category: "asia_pacific"
+  - id: cls_telegraph
+    name: "财联社电报"
+    url: "https://rsshub.rssforever.com/cls/telegraph"
+    category: "china_finance"
+  - id: yicai_brief
+    name: "第一财经"
+    url: "https://rsshub.rssforever.com/yicai/brief"
+    category: "china_finance"
+  - id: wscn_hot
+    name: "华尔街见闻-热门"
+    url: "https://rsshub.rssforever.com/wallstreetcn/hot"
+    category: "china_finance"
+  - id: 36kr
+    name: "36氪"
+    url: "https://36kr.com/feed"
+    category: "china_tech"
+  - id: huxiu
+    name: "虎嗅"
+    url: "https://rsshub.rssforever.com/huxiu/article"
+    category: "china_tech"
+  - id: people_daily
+    name: "人民日报"
+    url: "https://rsshub.rssforever.com/people/opinion"
+    category: "china_policy"
+
+  # Verified expansion batch: official macro/regulator/market-infrastructure/crypto feeds.
+  - id: fed_press_all
+    name: "Federal Reserve - All Press Releases"
+    url: "https://www.federalreserve.gov/feeds/press_all.xml"
+    category: "macro_policy"
+  - id: fed_monetary_policy
+    name: "Federal Reserve - Monetary Policy"
+    url: "https://www.federalreserve.gov/feeds/press_monetary.xml"
+    category: "macro_policy"
+  - id: fed_bank_regulation
+    name: "Federal Reserve - Banking Regulation"
+    url: "https://www.federalreserve.gov/feeds/press_bcreg.xml"
+    category: "macro_policy"
+  - id: fed_enforcement
+    name: "Federal Reserve - Enforcement Actions"
+    url: "https://www.federalreserve.gov/feeds/press_enforcement.xml"
+    category: "macro_policy"
+  - id: fed_speeches
+    name: "Federal Reserve - Speeches"
+    url: "https://www.federalreserve.gov/feeds/speeches.xml"
+    category: "macro_policy"
+  - id: fed_testimony
+    name: "Federal Reserve - Testimony"
+    url: "https://www.federalreserve.gov/feeds/testimony.xml"
+    category: "macro_policy"
+  - id: fed_h15_rates
+    name: "Federal Reserve - H.15 Interest Rates"
+    url: "https://www.federalreserve.gov/feeds/h15.xml"
+    category: "macro_data"
+    limit: 120
+  - id: fed_g17_industrial_production
+    name: "Federal Reserve - G.17 Industrial Production"
+    url: "https://www.federalreserve.gov/feeds/g17.xml"
+    category: "macro_data"
+    limit: 120
+  - id: fed_g19_consumer_credit
+    name: "Federal Reserve - G.19 Consumer Credit"
+    url: "https://www.federalreserve.gov/feeds/g19.xml"
+    category: "macro_data"
+  - id: fed_z1_financial_accounts
+    name: "Federal Reserve - Z.1 Financial Accounts"
+    url: "https://www.federalreserve.gov/feeds/z1.xml"
+    category: "macro_data"
+    limit: 120
+  - id: sec_press
+    name: "SEC - Press Releases"
+    url: "https://www.sec.gov/news/pressreleases.rss"
+    category: "us_regulator"
+  - id: sec_speeches
+    name: "SEC - Speeches and Statements"
+    url: "https://www.sec.gov/news/speeches-statements.rss"
+    category: "us_regulator"
+  - id: sec_statements
+    name: "SEC - Public Statements"
+    url: "https://www.sec.gov/news/statements.rss"
+    category: "us_regulator"
+  - id: sec_testimony
+    name: "SEC - Testimony"
+    url: "https://www.sec.gov/news/testimony.rss"
+    category: "us_regulator"
+  - id: treasury_mspd
+    name: "TreasuryDirect - Monthly Statement of Public Debt"
+    url: "https://www.treasurydirect.gov/rss/mspd.xml"
+    category: "macro_data"
+    limit: 120
+  - id: treasury_savings_bonds
+    name: "TreasuryDirect - Savings Bonds"
+    url: "https://www.treasurydirect.gov/rss/sbpro.xml"
+    category: "macro_data"
+  - id: hkex_news_releases
+    name: "HKEX - News Releases"
+    url: "https://www.hkex.com.hk/Services/RSS-Feeds/News-Releases?sc_lang=en"
+    category: "hk_market"
+  - id: hkex_regulatory_announcements
+    name: "HKEX - Regulatory Announcements"
+    url: "https://www.hkex.com.hk/Services/RSS-Feeds/regulatory-announcements?sc_lang=en"
+    category: "hk_market"
+  - id: hkex_market_communications
+    name: "HKEX - Market Communications"
+    url: "https://www.hkex.com.hk/Services/RSS-Feeds/market-communications?sc_lang=en"
+    category: "hk_market"
+  - id: hkex_listing_matters
+    name: "HKEX - Listing Rules and Guidance"
+    url: "https://www.hkex.com.hk/Services/RSS-Feeds/Updates-to-Rules-and-Guidance-on-Listing-Matters?sc_lang=en"
+    category: "hk_market"
+  - id: hkex_sehk_rules
+    name: "HKEX - SEHK Trading Rules"
+    url: "https://www.hkex.com.hk/Services/RSS-Feeds/Updates-to-Trading-Rules-of-SEHK?sc_lang=en"
+    category: "hk_market"
+  - id: hkex_hkfe_rules
+    name: "HKEX - HKFE Trading Rules"
+    url: "https://www.hkex.com.hk/Services/RSS-Feeds/Updates-to-Trading-Rules-of-HKFE?sc_lang=en"
+    category: "hk_market"
+  - id: nasdaq_trader_headlines
+    name: "Nasdaq Trader - All Headlines"
+    url: "https://www.nasdaqtrader.com/rss.aspx?feed=currentheadlines&categorylist=0"
+    category: "us_market_infra"
+    limit: 300
+  - id: nasdaq_trader_equities
+    name: "Nasdaq Trader - Equities Headlines"
+    url: "https://www.nasdaqtrader.com/rss.aspx?feed=currentheadlines&categorylist=2,6,7"
+    category: "us_market_infra"
+  - id: nasdaq_trader_options
+    name: "Nasdaq Trader - Options Headlines"
+    url: "https://www.nasdaqtrader.com/rss.aspx?feed=currentheadlines&categorylist=11,12,13"
+    category: "us_market_infra"
+  - id: nasdaq_trader_data
+    name: "Nasdaq Trader - Data Products Headlines"
+    url: "https://www.nasdaqtrader.com/rss.aspx?feed=currentheadlines&categorylist=5,48"
+    category: "us_market_infra"
+  - id: nasdaq_trader_tradehalts
+    name: "Nasdaq Trader - Trade Halts"
+    url: "https://www.nasdaqtrader.com/rss.aspx?feed=tradehalts"
+    category: "us_market_infra"
+  - id: coindesk
+    name: "CoinDesk"
+    url: "https://www.coindesk.com/arc/outboundfeeds/rss/"
+    category: "crypto_finance"
+  - id: cointelegraph
+    name: "Cointelegraph"
+    url: "https://cointelegraph.com/rss"
+    category: "crypto_finance"
+  - id: decrypt
+    name: "Decrypt"
+    url: "https://decrypt.co/feed"
+    category: "crypto_finance"
+  - id: cryptoslate
+    name: "CryptoSlate"
+    url: "https://cryptoslate.com/feed/"
+    category: "crypto_finance"
+  - id: bitcoin_magazine
+    name: "Bitcoin Magazine"
+    url: "https://bitcoinmagazine.com/.rss/full/"
+    category: "crypto_finance"
+  - id: theblock
+    name: "The Block"
+    url: "https://www.theblock.co/rss.xml"
+    category: "crypto_finance"
+  - id: fred_blog
+    name: "FRED Blog"
+    url: "https://fredblog.stlouisfed.org/feed/"
+    category: "macro_analysis"
+  - id: marketwatch_marketpulse
+    name: "MarketWatch - MarketPulse"
+    url: "https://feeds.content.dowjones.io/public/rss/mw_marketpulse"
+    category: "international_finance"
+  - id: marketwatch_realtime
+    name: "MarketWatch - Real-time Headlines"
+    url: "https://feeds.content.dowjones.io/public/rss/mw_realtimeheadlines"
+    category: "international_finance"
+  - id: marketwatch_bulletins
+    name: "MarketWatch - Bulletins"
+    url: "https://feeds.content.dowjones.io/public/rss/mw_bulletins"
+    category: "international_finance"
+  - id: wsj_technology
+    name: "WSJ - Technology"
+    url: "https://feeds.a.dj.com/rss/RSSWSJD.xml"
+    category: "international_general"
+  - id: wsj_opinion
+    name: "WSJ - Opinion"
+    url: "https://feeds.a.dj.com/rss/RSSOpinion.xml"
+    category: "international_general"
+  - id: cnbc_finance
+    name: "CNBC - Finance"
+    url: "https://www.cnbc.com/id/10000664/device/rss/rss.html"
+    category: "international_finance"
+  - id: cnbc_economy
+    name: "CNBC - Economy"
+    url: "https://www.cnbc.com/id/20910258/device/rss/rss.html"
+    category: "international_finance"
+  - id: cnbc_markets
+    name: "CNBC - Markets"
+    url: "https://www.cnbc.com/id/100003114/device/rss/rss.html"
+    category: "international_finance"
+  - id: cnbc_investing
+    name: "CNBC - Investing"
+    url: "https://www.cnbc.com/id/15839069/device/rss/rss.html"
+    category: "international_finance"
+  - id: cnbc_earnings
+    name: "CNBC - Earnings"
+    url: "https://www.cnbc.com/id/15839135/device/rss/rss.html"
+    category: "international_finance"
+  - id: cnbc_us_news
+    name: "CNBC - US News"
+    url: "https://www.cnbc.com/id/10000113/device/rss/rss.html"
+    category: "international_general"
+  - id: economist_finance
+    name: "The Economist - Finance and Economics"
+    url: "https://www.economist.com/finance-and-economics/rss.xml"
+    category: "international_finance"
+    limit: 300
+  - id: economist_business
+    name: "The Economist - Business"
+    url: "https://www.economist.com/business/rss.xml"
+    category: "international_finance"
+    limit: 300
+
+api_sources:
+  - id: wallstreetcn
+    name: "华尔街见闻"
+    url: "https://api.wallstreetcn.com/apiv1/content/articles?channel=global-channel&limit=30"
+    type: "json"
+    category: "china_finance"
+    fields:
+      title: "title"
+      summary: "content_short"
+      link: "uri"
+      time: "display_time"
+    data_path: "data.items"
+  - id: sina_finance
+    name: "新浪财经"
+    url: "https://feed.mix.sina.com.cn/api/roll/get?pageid=153&lid=2516&k=&num=30&page=1"
+    type: "json"
+    category: "china_finance"
+    fields:
+      title: "title"
+      summary: "intro"
+      link: "url"
+      time: "ctime"
+    data_path: "result.data"
+  - id: ths_news
+    name: "同花顺快讯"
+    url: "https://news.10jqka.com.cn/tapp/news/push/stock/?page=1&tag=&track=website&pagesize=30"
+    type: "json"
+    category: "china_finance"
+    fields:
+      title: "title"
+      summary: "digest"
+      link: "url"
+      time: "ctime"
+    data_path: "data.list"

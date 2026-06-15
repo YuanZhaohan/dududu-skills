@@ -1,0 +1,3 @@
+display_name: A-Share Data Sources
+short_description: Production A-share data source refresh and storage.
+default_prompt: Use this skill to fetch, normalize, store, or debug free A-share market, financial, announcement, news, and sentiment data.

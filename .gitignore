@@ -1,0 +1,36 @@
+# Local editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Download/cache copies kept outside the skill package
+.repo-downloads/
+
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets and local runtime config
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+cookies.json
+
+# Generated data-source outputs
+a-share-data-sources/data/raw/
+a-share-data-sources/data/normalized/
+a-share-data-sources/data/state/
+
+# Local logs and reports
+*.log

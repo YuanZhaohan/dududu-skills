@@ -1,0 +1,3 @@
+# One A-share symbol per line. Plain codes are accepted.
+600519
+000001
