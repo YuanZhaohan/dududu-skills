@@ -34,3 +34,4 @@ a-share-data-sources/data/state/
 
 # Local logs and reports
 *.log
+a-share-data-sources/references/TrendRadar/output/

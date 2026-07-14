@@ -1,5 +1,5 @@
-# Public news source pool imported and sanitized from 金融数据源_v2/sources.yaml.
-# No API keys or mail credentials belong in this file.
+# 从“金融数据源_v2/sources.yaml”导入并清洗的公开新闻源池。
+# 不要在本文件写入 API key、邮箱密码、cookie 或 token。
 
 rss_sources:
   - id: bloomberg
@@ -103,7 +103,7 @@ rss_sources:
     url: "https://rsshub.rssforever.com/yicai/brief"
     category: "china_finance"
   - id: wscn_hot
-    name: "华尔街见闻-热门"
+    name: "华尔街见闻热门"
     url: "https://rsshub.rssforever.com/wallstreetcn/hot"
     category: "china_finance"
   - id: 36kr
@@ -316,6 +316,13 @@ rss_sources:
     category: "international_finance"
     limit: 300
 
+  # TrendRadar RSS reference source.
+  - id: hacker_news
+    name: "Hacker News"
+    url: "https://hnrss.org/frontpage"
+    category: "tech_signal"
+    limit: 80
+
 api_sources:
   - id: wallstreetcn
     name: "华尔街见闻"
@@ -350,3 +357,93 @@ api_sources:
       link: "url"
       time: "ctime"
     data_path: "data.list"
+
+  # TrendRadar / NewsNow hotlist sources. These stay inside the news pool; no separate provider script.
+  - id: newsnow_toutiao
+    name: "今日头条热榜"
+    url: "https://newsnow.busiyi.world/api/s?id=toutiao&latest"
+    type: "newsnow_hotlist"
+    category: "china_hotlist"
+    newsnow_id: "toutiao"
+    expected_domain: "toutiao.com"
+    limit: 50
+  - id: newsnow_baidu
+    name: "百度热搜"
+    url: "https://newsnow.busiyi.world/api/s?id=baidu&latest"
+    type: "newsnow_hotlist"
+    category: "china_hotlist"
+    newsnow_id: "baidu"
+    expected_domain: "baidu.com"
+    limit: 50
+  - id: newsnow_wallstreetcn_hot
+    name: "华尔街见闻热榜"
+    url: "https://newsnow.busiyi.world/api/s?id=wallstreetcn-hot&latest"
+    type: "newsnow_hotlist"
+    category: "china_finance_hotlist"
+    newsnow_id: "wallstreetcn-hot"
+    expected_domain: "wallstreetcn.com"
+    limit: 50
+  - id: newsnow_thepaper
+    name: "澎湃新闻热榜"
+    url: "https://newsnow.busiyi.world/api/s?id=thepaper&latest"
+    type: "newsnow_hotlist"
+    category: "china_news_hotlist"
+    newsnow_id: "thepaper"
+    expected_domain: "thepaper.cn"
+    limit: 50
+  - id: newsnow_bilibili_hot_search
+    name: "Bilibili 热搜"
+    url: "https://newsnow.busiyi.world/api/s?id=bilibili-hot-search&latest"
+    type: "newsnow_hotlist"
+    category: "china_social_hotlist"
+    newsnow_id: "bilibili-hot-search"
+    expected_domain: "bilibili.com"
+    limit: 50
+  - id: newsnow_cls_hot
+    name: "财联社热门"
+    url: "https://newsnow.busiyi.world/api/s?id=cls-hot&latest"
+    type: "newsnow_hotlist"
+    category: "china_finance_hotlist"
+    newsnow_id: "cls-hot"
+    expected_domain: "cls.cn"
+    limit: 50
+  - id: newsnow_ifeng
+    name: "凤凰网热榜"
+    url: "https://newsnow.busiyi.world/api/s?id=ifeng&latest"
+    type: "newsnow_hotlist"
+    category: "china_news_hotlist"
+    newsnow_id: "ifeng"
+    expected_domain: "ifeng.com"
+    limit: 50
+  - id: newsnow_tieba
+    name: "贴吧热榜"
+    url: "https://newsnow.busiyi.world/api/s?id=tieba&latest"
+    type: "newsnow_hotlist"
+    category: "china_social_hotlist"
+    newsnow_id: "tieba"
+    expected_domain: "baidu.com"
+    limit: 50
+  - id: newsnow_weibo
+    name: "微博热搜"
+    url: "https://newsnow.busiyi.world/api/s?id=weibo&latest"
+    type: "newsnow_hotlist"
+    category: "china_social_hotlist"
+    newsnow_id: "weibo"
+    expected_domain: "weibo.com"
+    limit: 50
+  - id: newsnow_douyin
+    name: "抖音热榜"
+    url: "https://newsnow.busiyi.world/api/s?id=douyin&latest"
+    type: "newsnow_hotlist"
+    category: "china_social_hotlist"
+    newsnow_id: "douyin"
+    expected_domain: "douyin.com"
+    limit: 50
+  - id: newsnow_zhihu
+    name: "知乎热榜"
+    url: "https://newsnow.busiyi.world/api/s?id=zhihu&latest"
+    type: "newsnow_hotlist"
+    category: "china_social_hotlist"
+    newsnow_id: "zhihu"
+    expected_domain: "zhihu.com"
+    limit: 50

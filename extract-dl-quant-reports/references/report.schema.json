@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/extract-dl-quant-reports/report.schema.json",
+  "title": "Deep-learning quantitative report extraction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "document_id",
+    "metadata",
+    "executive_summary",
+    "sections",
+    "figures",
+    "topics",
+    "review_notes"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "document_id": {"type": "string", "minLength": 1},
+    "metadata": {"$ref": "#/$defs/metadata"},
+    "executive_summary": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/claim"}
+    },
+    "sections": {"$ref": "#/$defs/sections"},
+    "figures": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/figure"}
+    },
+    "topics": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "review_notes": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "authors",
+        "institution",
+        "publication_date",
+        "report_version",
+        "source_language",
+        "source_file",
+        "source_sha256",
+        "pdf_page_count",
+        "ocr_mode",
+        "extraction_mode",
+        "processed_at",
+        "review_status"
+      ],
+      "properties": {
+        "title": {"type": "string"},
+        "authors": {"type": "array", "items": {"type": "string"}},
+        "institution": {"type": "string"},
+        "publication_date": {"type": "string"},
+        "report_version": {"type": "string"},
+        "source_language": {"enum": ["zh", "en", "mixed", "unknown"]},
+        "source_file": {"type": "string", "minLength": 1},
+        "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "pdf_page_count": {"type": ["integer", "null"], "minimum": 1},
+        "ocr_mode": {"enum": ["paddleocr", "local_text_fallback"]},
+        "extraction_mode": {"enum": ["thorough", "fast"]},
+        "processed_at": {"type": "string"},
+        "review_status": {"enum": ["draft", "reviewed"]}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pdf_page", "printed_page", "section", "figure_table", "quote", "ocr_quality"],
+      "properties": {
+        "pdf_page": {"type": "integer", "minimum": 1},
+        "printed_page": {"type": ["string", "null"]},
+        "section": {"type": ["string", "null"]},
+        "figure_table": {"type": ["string", "null"]},
+        "quote": {"type": "string", "minLength": 1},
+        "ocr_quality": {"enum": ["high", "medium", "low"]}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "value", "details", "confidence", "value_origin", "evidence"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "value": {"type": "string"},
+        "details": {"type": "string"},
+        "confidence": {"enum": ["high", "medium", "low", "missing"]},
+        "value_origin": {"enum": ["reported", "derived", "chart_estimate", "not_stated"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"confidence": {"const": "missing"}}},
+          "then": {
+            "properties": {
+              "value_origin": {"const": "not_stated"},
+              "evidence": {"maxItems": 0}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"confidence": {"enum": ["high", "medium", "low"]}}},
+          "then": {"properties": {"evidence": {"minItems": 1}}}
+        }
+      ]
+    },
+    "claimList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/claim"}
+    },
+    "sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "problem_definition",
+        "core_method",
+        "model_architecture",
+        "datasets",
+        "features",
+        "targets",
+        "losses",
+        "standardization",
+        "training_settings",
+        "experimental_conclusions",
+        "limitations",
+        "baselines",
+        "ablations",
+        "model_comparisons",
+        "backtest_design",
+        "backtest_performance",
+        "validity_audit"
+      ],
+      "properties": {
+        "problem_definition": {"$ref": "#/$defs/claimList"},
+        "core_method": {"$ref": "#/$defs/claimList"},
+        "model_architecture": {"$ref": "#/$defs/claimList"},
+        "datasets": {"$ref": "#/$defs/claimList"},
+        "features": {"$ref": "#/$defs/claimList"},
+        "targets": {"$ref": "#/$defs/claimList"},
+        "losses": {"$ref": "#/$defs/claimList"},
+        "standardization": {"$ref": "#/$defs/claimList"},
+        "training_settings": {"$ref": "#/$defs/claimList"},
+        "experimental_conclusions": {"$ref": "#/$defs/claimList"},
+        "limitations": {"$ref": "#/$defs/claimList"},
+        "baselines": {"$ref": "#/$defs/claimList"},
+        "ablations": {"$ref": "#/$defs/claimList"},
+        "model_comparisons": {"$ref": "#/$defs/claimList"},
+        "backtest_design": {"$ref": "#/$defs/claimList"},
+        "backtest_performance": {"$ref": "#/$defs/claimList"},
+        "validity_audit": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {"$ref": "#/$defs/claim"}
+        }
+      }
+    },
+    "figure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "asset_path",
+        "pdf_page",
+        "printed_page",
+        "figure_table",
+        "source_caption",
+        "interpretation",
+        "confidence"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["architecture", "formula", "table", "backtest_curve", "other"]},
+        "title": {"type": "string"},
+        "asset_path": {"type": "string", "minLength": 1},
+        "pdf_page": {"type": "integer", "minimum": 1},
+        "printed_page": {"type": ["string", "null"]},
+        "figure_table": {"type": ["string", "null"]},
+        "source_caption": {"type": "string"},
+        "interpretation": {"type": "string"},
+        "confidence": {"enum": ["high", "medium", "low", "missing"]}
+      }
+    }
+  }
+}

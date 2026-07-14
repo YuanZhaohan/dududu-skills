@@ -1,30 +1,30 @@
-# Imported Sources
+# 参考项目来源
 
-This skill is the production implementation. The folders below are reference code only; do not run their setup scripts or copy private configuration into `a-share-data-sources`.
+当前 skill 是生产实现。以下目录只是参考源码，不要运行它们的安装脚本，也不要把私有配置复制进 `a-share-data-sources`。
 
 ## `金融数据源_v2`
 
-Original local reference path: `C:\Users\dududu\Desktop\金融数据源_v2`.
+原始本地路径：`C:\Users\dududu\Desktop\金融数据源_v2`。
 
-Use as the fourth reference project.
+用途：第四个参考项目。
 
-- `sources.yaml`: sanitized into `data/input/news_sources.yaml`; keep public RSS/API source definitions only.
-- `track-pulse/fetcher.py`: direct-first news fetching, retry, timeout, and local cache fallback.
-- `industry-sentiment-tracker/scripts/industry_stock_pipeline.py`: Tencent quote batching, 5-day momentum, Eastmoney Guba post extraction, and industry-level aggregation.
-- `industry-sentiment-tracker/scripts/industry_sentiment_report.py`: sentiment reporting is useful downstream, but LLM calls are not part of this data-source layer.
+- `sources.yaml`：已清洗进 `data/input/news_sources.yaml`，只保留公开 RSS/API 新闻源定义。
+- `track-pulse/fetcher.py`：参考 direct-first 新闻抓取、retry、timeout、本地 cache fallback。
+- `industry-sentiment-tracker/scripts/industry_stock_pipeline.py`：参考腾讯行情批量、5 日动量、东财股吧帖子抽取、行业聚合。
+- `industry-sentiment-tracker/scripts/industry_sentiment_report.py`：情绪报告可作为下游参考，但 LLM 调用不属于当前数据源层。
 
-Do not copy API keys, SMTP credentials, or local user config values from this project.
+不要复制 API key、SMTP 密码或本地用户配置。
 
 ## `references/UZI-Skill/`
 
-Use for A-share source priority and known data-source pitfalls:
+用途：参考 A 股源优先级和数据源坑点。
 
-- AkShare is broad but unstable.
-- BaoStock is useful fallback when HTTPS sources fail.
-- CNINFO direct first-page API is safer than AkShare CNINFO full-pagination wrappers.
-- News providers such as Jin10, Eastmoney, THS, Xueqiu, and forum/browser fallbacks are useful source-pattern references.
+- AkShare 覆盖广，但稳定性不能作为唯一依赖。
+- BaoStock 适合 HTTPS 源失败时兜底。
+- CNINFO 直连第一页接口比 AkShare 巨潮全分页包装更安全。
+- 金十、东财、同花顺、雪球、论坛/browser fallback 都可作为源模式参考。
 
-Useful paths:
+常看路径：
 
 - `references/UZI-Skill/docs/DATA-PROVIDERS.md`
 - `references/UZI-Skill/commands/analyze-stock.md`
@@ -32,13 +32,13 @@ Useful paths:
 
 ## `references/TradingAgents/`
 
-Use for routing behavior:
+用途：参考路由行为。
 
-- Per-section vendor maps.
-- Explicit no-data states.
-- Continue fallbacks on rate-limit or provider-specific failures.
+- 分数据类型 vendor map。
+- 显式 no-data 状态。
+- rate limit 或 provider 特定失败时继续 fallback。
 
-Useful paths:
+常看路径：
 
 - `references/TradingAgents/tradingagents/dataflows/`
 - `references/TradingAgents/tradingagents/agents/analysts/`
@@ -46,13 +46,31 @@ Useful paths:
 
 ## `references/ai-hedge-fund/`
 
-Use for production hygiene:
+用途：参考生产卫生。
 
-- Typed data records.
-- Cache boundaries by endpoint and date.
-- Retry/backoff on rate limits.
+- 类型化数据记录。
+- 按 endpoint 和日期划分 cache 边界。
+- rate limit retry/backoff。
 
-Useful paths:
+常看路径：
 
 - `references/ai-hedge-fund/src/`
 - `references/ai-hedge-fund/app/backend/`
+
+## `references/TrendRadar/`
+
+来源：https://github.com/sansan0/TrendRadar
+
+用途：参考趋势和舆情监控模式。
+
+已集成的 NewsNow 热榜源定义位于 `data/input/news_sources.yaml`，类型是 `newsnow_hotlist`；解析仍放在 `scripts/sources/news_pool.py`，不单独新增 provider 文件。
+
+可参考内容：
+
+- 多平台热榜聚合。
+- 下游 AI 分析前的关键词过滤和降噪。
+- RSS 订阅和定时轮询。
+- 微信、飞书、钉钉、Telegram、email、ntfy、Bark、Slack 等提醒路由。
+- MCP 风格的趋势/新闻查询接口。
+
+不要复制通知 token、本地 `.env` 或生成的 `output/` 数据库。

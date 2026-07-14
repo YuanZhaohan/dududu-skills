@@ -1,0 +1,4 @@
+interface:
+  display_name: "深度学习量化研报提取"
+  short_description: "Traceable deep-learning quant report Wiki builder"
+  default_prompt: "Use $extract-dl-quant-reports to parse my PDF reports into a traceable structured Markdown wiki."

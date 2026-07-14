@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 from typing import Any
 import time
+from urllib.parse import urlparse
 
 from common import (
     DATA_DIR,
@@ -24,6 +25,7 @@ from common import (
 SOURCE = "news_pool"
 CACHE_DIR = DATA_DIR / "raw" / "news_cache"
 CHECKPOINT_PATH = STATE_DIR / "news_pool_checkpoint.json"
+NEWSNOW_DEFAULT_API_URL = "https://newsnow.busiyi.world/api/s"
 
 
 def _parse_time(value: Any) -> datetime | None:
@@ -141,11 +143,18 @@ def _status(
     }
 
 
-def _record(source: dict[str, Any], title: str, summary: str, link: str, published_at: Any) -> dict[str, Any]:
+def _record(
+    source: dict[str, Any],
+    title: str,
+    summary: str,
+    link: str,
+    published_at: Any,
+    extra_payload: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     source_id = _source_id(source)
     published = _parse_time(published_at)
     published_text = published.isoformat(timespec="seconds") if published else ""
-    return {
+    record = {
         "symbol": "GLOBAL",
         "section": "news",
         "source": str(source_id),
@@ -161,6 +170,31 @@ def _record(source: dict[str, Any], title: str, summary: str, link: str, publish
             "category": source.get("category", ""),
         },
     }
+    if extra_payload:
+        record["payload"].update(extra_payload)
+    return record
+
+
+def _url_matches_domain(url: str, expected_domain: str) -> bool:
+    if not url or not expected_domain:
+        return True
+    try:
+        parsed = urlparse(url)
+    except Exception:
+        return False
+    if parsed.scheme and parsed.scheme != "https":
+        return False
+    host = (parsed.hostname or "").lower()
+    expected = expected_domain.lower().strip()
+    return host == expected or host.endswith("." + expected)
+
+
+def _newsnow_url(source: dict[str, Any]) -> str:
+    if source.get("url"):
+        return str(source["url"])
+    platform_id = str(source.get("newsnow_id") or _source_id(source).removeprefix("newsnow_"))
+    api_base = str(source.get("api_base") or NEWSNOW_DEFAULT_API_URL).rstrip("?")
+    return f"{api_base}?id={platform_id}&latest"
 
 
 def fetch_rss_source(
@@ -256,6 +290,90 @@ def _get_nested(data: dict[str, Any], path: str) -> list[dict[str, Any]]:
     return current if isinstance(current, list) else []
 
 
+def fetch_newsnow_hotlist_source_with_status(
+    source: dict[str, Any],
+    *,
+    lookback_hours: int = 24,
+    timeout: int = 5,
+    retries: int = 1,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    source_id = _source_id(source)
+    started_at = now_iso()
+    started = time.monotonic()
+    try:
+        response = http_get(_newsnow_url(source), timeout=timeout, retries=retries)
+        data = response.json()
+        status = str(data.get("status") or "")
+        if status and status not in {"success", "cache"}:
+            raise ValueError(f"unexpected NewsNow status: {status}")
+        rows = data.get("items", [])
+        if not isinstance(rows, list):
+            raise ValueError("NewsNow response items is not a list")
+
+        records: list[dict[str, Any]] = []
+        limit = min(max(int(source.get("limit") or 50), 1), 300)
+        platform_id = str(source.get("newsnow_id") or source_id.removeprefix("newsnow_"))
+        expected_domain = str(source.get("expected_domain") or "")
+        skipped_domain = 0
+        for rank, row in enumerate(rows[:limit], 1):
+            if not isinstance(row, dict):
+                continue
+            title = str(row.get("title") or "").strip()
+            if not title:
+                continue
+            link = str(row.get("url") or row.get("mobileUrl") or "")
+            mobile_url = str(row.get("mobileUrl") or "")
+            if expected_domain and link and not _url_matches_domain(link, expected_domain):
+                skipped_domain += 1
+                continue
+            published_at = row.get("pubDate") or row.get("published_at") or row.get("time") or row.get("date")
+            summary = str(row.get("desc") or row.get("summary") or "")
+            records.append(
+                _record(
+                    source,
+                    title,
+                    summary,
+                    link,
+                    published_at,
+                    {
+                        "source_type": "newsnow_hotlist",
+                        "newsnow_platform_id": platform_id,
+                        "newsnow_status": status,
+                        "rank": rank,
+                        "mobile_url": mobile_url,
+                        "hot": row.get("hot", ""),
+                        "raw_id": row.get("id", ""),
+                    },
+                )
+            )
+        if records:
+            _write_cache(str(source_id), records)
+        error = None if records or not skipped_domain else f"all_records_failed_domain_check: {skipped_domain}"
+        return records, _status(
+            source,
+            kind="newsnow_hotlist",
+            provider_ok=error is None,
+            record_count=len(records),
+            cache_used=False,
+            error=error,
+            started_at=started_at,
+            elapsed_seconds=time.monotonic() - started,
+        )
+    except Exception as exc:
+        error = f"{type(exc).__name__}: {str(exc)[:160]}"
+        cached = _cache_records(str(source_id), error)
+        return cached, _status(
+            source,
+            kind="newsnow_hotlist",
+            provider_ok=False,
+            record_count=len(cached),
+            cache_used=bool(cached),
+            error=error,
+            started_at=started_at,
+            elapsed_seconds=time.monotonic() - started,
+        )
+
+
 def fetch_api_source(
     source: dict[str, Any],
     *,
@@ -274,6 +392,13 @@ def fetch_api_source_with_status(
     timeout: int = 5,
     retries: int = 1,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    if source.get("type") == "newsnow_hotlist":
+        return fetch_newsnow_hotlist_source_with_status(
+            source,
+            lookback_hours=lookback_hours,
+            timeout=timeout,
+            retries=retries,
+        )
     source_id = _source_id(source)
     cutoff = datetime.now() - timedelta(hours=lookback_hours)
     started_at = now_iso()

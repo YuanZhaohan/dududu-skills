@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "document_id": "replace-with-document-id",
+  "metadata": {
+    "title": "未说明",
+    "authors": [],
+    "institution": "未说明",
+    "publication_date": "未说明",
+    "report_version": "未说明",
+    "source_language": "zh",
+    "source_file": "",
+    "source_sha256": "",
+    "pdf_page_count": null,
+    "ocr_mode": "paddleocr",
+    "extraction_mode": "thorough",
+    "processed_at": "",
+    "review_status": "draft"
+  },
+  "executive_summary": [],
+  "sections": {
+    "problem_definition": [],
+    "core_method": [],
+    "model_architecture": [],
+    "datasets": [],
+    "features": [],
+    "targets": [],
+    "losses": [],
+    "standardization": [],
+    "training_settings": [],
+    "experimental_conclusions": [],
+    "limitations": [],
+    "baselines": [],
+    "ablations": [],
+    "model_comparisons": [],
+    "backtest_design": [],
+    "backtest_performance": [],
+    "validity_audit": []
+  },
+  "figures": [],
+  "topics": [],
+  "review_notes": []
+}
