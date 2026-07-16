@@ -1,0 +1,4 @@
+interface:
+  display_name: "指数周期分析"
+  short_description: "分析MA独立周期与全历史LPPLS泡沫指数"
+  default_prompt: "使用 $analyze-index-cycles 获取 000985 中证全指收盘价，分析频谱周期、MA34/55/89 共识相位与全历史 LPPLS 正负泡沫指数。"
